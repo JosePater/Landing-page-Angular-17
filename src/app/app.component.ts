@@ -11,10 +11,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-
-  menuOption: string = '';
-
-  onOption(menuOption: string) {
-    this.menuOption = menuOption;
-  }
+  // Títulos de navbar
+  titleNav: string[] = ['home', 'products', 'contact'];
 }
