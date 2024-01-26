@@ -1,15 +1,26 @@
-@if(!loading){
-<div class="card">
-    <img src={{product?.image}} class="card-img-top" alt={{product?.title}}>
-    <div class="card-body">
-        <h5 class="card-title">{{product?.title}}</h5>
-        <h5>Price: {{product?.price | currency}}</h5>
-        <p class="card-text">{{product?.description}}</p>
-        <p class="card-text"><small class="text-body-secondary">Last updated 7 days ago</small></p>
-        <button class="btn btn-primary">Add to car</button>
+<!-- Success -->
+@if(!loading && !errorProduct) {
+    <div class="card">
+        <img src={{product?.image}} class="card-img-top" alt={{product?.title}}>
+        <div class="card-body">
+            <h5 class="card-title">{{product?.title}}</h5>
+            <h5>Price: {{product?.price | currency}}</h5>
+            <p class="card-text">{{product?.description}}</p>
+            <p class="card-text"><small class="text-body-secondary">Last updated 7 days ago</small></p>
+            <button class="btn btn-primary">Add to car</button>
+        </div>
     </div>
-</div>
+    
+}
+<!-- Wait -->
+@if(loading && !errorProduct) {
+<button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-border spinner-border-lg" aria-hidden="true"></span>
+    <span role="status"> Loading the product</span>
+</button>
+}
 
-} @else {
-<h4>Loading...</h4>
+<!-- Fails -->
+@if (errorProduct) {
+<h2>Error to loading the product</h2>
 }

@@ -12,20 +12,28 @@ import { Router } from '@angular/router';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
-
+  errorProduct: boolean = false;
+  loading: boolean = true;
   productsList: IProduct[] = [];
   private _apiService = inject(ApiService);
   private _router = inject(Router);
 
   ngOnInit(): void {
-    this._apiService.getProducts().subscribe((data: IProduct[]) => {
-      this.productsList = data;
-      console.log('ProductList: ',this.productsList);
+    this._apiService.getProducts().subscribe({
+      next: (data: IProduct[]) => {
+        this.productsList = data;
+        this.loading = false;
+        console.log('ProductList: ', this.productsList);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorProduct = true;
+        console.log(`Error: ${err}`);
+      },
     });
   }
 
   navigate(id: number): void {
-    console.log('Clic: ',id);
-    this._router.navigate(['/products',id]);
+    this._router.navigate(['/products', id]);
   }
 }

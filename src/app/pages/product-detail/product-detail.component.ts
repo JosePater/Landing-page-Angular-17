@@ -9,23 +9,29 @@ import { ApiService } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css'
+  styleUrl: './product-detail.component.css',
 })
-export class ProductsDetailComponent implements OnInit{
-  
+export class ProductsDetailComponent implements OnInit {
+  errorProduct: boolean = false;
   loading: boolean = true;
   public product?: IProduct;
-  
-  private _route = inject(ActivatedRoute);  // To navigation url
+
+  private _route = inject(ActivatedRoute); // To navigation url
   private _apiService = inject(ApiService); // To get product
-  
+
   ngOnInit(): void {
-    this._route.params.subscribe(params => {
-      this._apiService.getProductId(params['id']).subscribe((data: IProduct) => {
-        this.product = data;
-        this.loading = false;
-      })
+    this._route.params.subscribe((params) => {
+      this._apiService.getProductId(params['id']).subscribe({
+        next: (data: IProduct) => {
+          this.product = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.loading = false;
+          this.errorProduct = true;
+          console.log(`Error: ${err}`);
+        },
+      });
     });
   }
-
 }
