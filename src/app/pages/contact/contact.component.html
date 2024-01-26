@@ -1,1 +1,41 @@
-<p>contact works!</p>
+<div class="container">
+  <form [formGroup]="contactForm" class="row g-3" (submit)="enviar($event)">
+    <div class="mb-3" (submit)="enviar($event)">
+      <label for="" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        placeholder="name@example.com"
+        [ngClass]="{'is-invalid' : hasErrors('email','required') || hasErrors('email','email')}"
+      />
+      
+      @if (hasErrors('email','required')) {
+      <span class="text-danger">Email required</span>
+      } @if (hasErrors('email','email')) {
+      <span class="text-danger">Invalid email</span>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="" class="form-label">Message</label>
+      <textarea
+        class="form-control"
+        id="message"
+        formControlName="message"
+        rows="5"
+        [ngClass]="{'is-invalid' : hasErrors('message','required') || hasErrors('message','minlength')}"
+      ></textarea>
+
+      @if (hasErrors('message','required')) {
+      <span class="text-danger">Message required</span>
+      } @if (hasErrors('message','minlength')) {
+      <span class="text-danger">You must write at last 10 characters</span>
+      }
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!contactForm.valid">Submit form</button>
+    </div>
+  </form>
+</div>
