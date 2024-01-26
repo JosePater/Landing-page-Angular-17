@@ -11,14 +11,17 @@
       </tr>
     </thead>
     <tbody>
+      @for (product of productsList; track $index) {
       <tr>
         <th scope="row">1</th>
-        <th>Image</th>
-        <th>Jeans</th>
-        <th>$80.000</th>
-        <th><button class="btn btn-outline-primary">Details</button></th>
-    
+        <td>
+          <img src="{{ product.image }}" class="img-fluid" style="width: 80px;" alt="{{ product.title }}"/>
+        </td>
+        <th>{{product.title}}</th>
+        <th>{{product.price}}</th>
+        <th><button class="btn btn-outline-primary" (click)="navigate(product.id)">Details</button></th>
       </tr>
+      }
     </tbody>
   </table>
 </div>
